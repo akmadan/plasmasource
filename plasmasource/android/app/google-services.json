@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "293937172415",
+    "project_id": "plasmasource",
+    "storage_bucket": "plasmasource.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293937172415:android:2befb2108de9210adc5b0a",
+        "android_client_info": {
+          "package_name": "com.benzene.plasmasource"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "293937172415-m3j2ir07ahauf86m3jl68oafeuhpmpkl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.benzene.plasmasource",
+            "certificate_hash": "957c09effb368786e96e080e3c3aa9ae921cc754"
+          }
+        },
+        {
+          "client_id": "293937172415-idsnbpfb9ua9ufs4nbaugqmjjooprq56.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1af4w4qofGRQcnU-GwWee1fMgeAxMXP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "293937172415-idsnbpfb9ua9ufs4nbaugqmjjooprq56.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
