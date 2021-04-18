@@ -4,6 +4,20 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:plasmasource/utils/text.dart';
 
+//
+//
+//
+//
+//
+//
+// -----------------BLOOD GROUP----------------------
+//
+//
+//
+//
+//
+//
+
 class BloodGroup extends StatefulWidget {
   @override
   _BloodGroupState createState() => _BloodGroupState();
@@ -68,6 +82,20 @@ class _BloodGroupState extends State<BloodGroup> {
   }
 }
 
+//
+//
+//
+//
+//
+//
+// -----------------PATIENT NAME----------------------
+//
+//
+//
+//
+//
+//
+
 class PatientName extends StatefulWidget {
   @override
   _PatientNameState createState() => _PatientNameState();
@@ -76,32 +104,59 @@ class PatientName extends StatefulWidget {
 class _PatientNameState extends State<PatientName> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey.shade400.withOpacity(0.2),
-      ),
-      padding: EdgeInsets.all(10),
-      height: 70,
-      child: Center(
-        child: TextField(
-          cursorColor: Theme.of(context).primaryColor,
-          style: TextStyle(fontFamily: 'SFPro', fontSize: 20),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            hintText: "Enter Patient's Name",
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        bold_text(
+          text: 'Patient Details',
+          size: 24,
+          color: Colors.grey[700],
+        ),
+        SizedBox(height: 10),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade400.withOpacity(0.2),
+          ),
+          padding: EdgeInsets.all(10),
+          height: 70,
+          child: Center(
+            child: TextField(
+              cursorColor: Theme.of(context).primaryColor,
+              style: TextStyle(fontFamily: 'SFPro', fontSize: 20),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: "Enter Patient's Name",
+              ),
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
 
-class Address extends StatefulWidget {
+//
+//
+//
+//
+//
+//
+// -----------------HOSPITAL----------------------
+//
+//
+//
+//
+//
+//
+
+class Hospital extends StatefulWidget {
   @override
-  _AddressState createState() => _AddressState();
+  _HospitalState createState() => _HospitalState();
 }
 
-class _AddressState extends State<Address> {
+class _HospitalState extends State<Hospital> {
+  TextEditingController namecontroller = new TextEditingController();
+  TextEditingController phonecontroller = new TextEditingController();
   TextEditingController addresscontroller = new TextEditingController();
   String _currentAddress;
   Position _currentposition;
@@ -153,7 +208,33 @@ class _AddressState extends State<Address> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        bold_text(
+          text: 'Hospital Details',
+          size: 24,
+          color: Colors.grey[700],
+        ),
+        SizedBox(height: 10),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade400.withOpacity(0.2),
+          ),
+          padding: EdgeInsets.all(10),
+          height: 70,
+          child: Center(
+            child: TextField(
+              controller: namecontroller,
+              cursorColor: Theme.of(context).primaryColor,
+              style: TextStyle(fontFamily: 'SFPro', fontSize: 20),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: "Hospital Name",
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 10),
         Container(
           decoration: BoxDecoration(
             color: Colors.grey.shade400.withOpacity(0.2),
@@ -181,6 +262,62 @@ class _AddressState extends State<Address> {
               text: 'Take Current Address',
               color: Theme.of(context).primaryColor),
         )),
+      ],
+    );
+  }
+}
+
+//
+//
+//
+//
+//
+//
+// -----------------CONTACT----------------------
+//
+//
+//
+//
+//
+//
+
+class Contact extends StatefulWidget {
+  @override
+  _ContactState createState() => _ContactState();
+}
+
+class _ContactState extends State<Contact> {
+  TextEditingController phonecontroller = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        bold_text(
+          text: 'Contact Details',
+          size: 24,
+          color: Colors.grey[700],
+        ),
+        SizedBox(height: 10),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade400.withOpacity(0.2),
+          ),
+          padding: EdgeInsets.all(10),
+          height: 70,
+          child: Center(
+            child: TextField(
+              keyboardType: TextInputType.phone,
+              controller: phonecontroller,
+              cursorColor: Theme.of(context).primaryColor,
+              style: TextStyle(fontFamily: 'SFPro', fontSize: 20),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: "Enter Contact No.",
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }

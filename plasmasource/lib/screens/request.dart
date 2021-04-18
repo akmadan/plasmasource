@@ -34,9 +34,13 @@ class _RequestState extends State<Request> {
             children: [
               PatientName(),
               SizedBox(height: 10),
-              Address(),
-              SizedBox(height: 10),
               BloodGroup(),
+              Divider(),
+              SizedBox(height: 20),
+              Hospital(),
+              Divider(),
+              SizedBox(height: 20),
+              Contact()
             ],
           )),
     );
