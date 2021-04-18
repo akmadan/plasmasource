@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:plasmasource/screens/location.dart';
+import 'package:plasmasource/screens/requests.dart';
 
-import 'package:plasmasource/screens/request.dart';
 import 'package:plasmasource/utils/text.dart';
 
 class appbar extends StatelessWidget {
@@ -29,7 +28,7 @@ class floating extends StatelessWidget {
     return Container(
         child: FloatingActionButton.extended(
             backgroundColor: Theme.of(context).primaryColor,
-            label: bold_text(text: 'Create Request'),
+            label: modified_text(text: 'Create Request', size:18),
             onPressed: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => Request(uid: uid)));
