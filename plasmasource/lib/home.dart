@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:plasmasource/screens/request.dart';
-import 'package:plasmasource/utils/text.dart';
 import 'package:plasmasource/utils/widgets.dart';
 
 class Home extends StatefulWidget {
@@ -15,7 +13,6 @@ class _HomeState extends State<Home> {
       drawer: drawer(),
       floatingActionButton: floating(),
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
         title: appbar(title: 'PlasmaSource'),
       ),
       body: Container(
