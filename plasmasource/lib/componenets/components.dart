@@ -19,12 +19,12 @@ import 'package:plasmasource/utils/text.dart';
 //
 
 class BloodGroup extends StatefulWidget {
+  static String bloodgroup = 'A+';
   @override
   _BloodGroupState createState() => _BloodGroupState();
 }
 
 class _BloodGroupState extends State<BloodGroup> {
-  String bloodgroup = 'A+';
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,7 +46,7 @@ class _BloodGroupState extends State<BloodGroup> {
                 height: 60.0,
                 child: DropdownButton<String>(
                   isExpanded: true,
-                  value: bloodgroup,
+                  value: BloodGroup.bloodgroup,
                   iconSize: 24,
                   elevation: 16,
                   style: const TextStyle(color: Colors.black),
@@ -56,7 +56,7 @@ class _BloodGroupState extends State<BloodGroup> {
                   ),
                   onChanged: (String newValue) {
                     setState(() {
-                      bloodgroup = newValue;
+                      BloodGroup.bloodgroup = newValue;
                     });
                   },
                   items: <String>[
@@ -97,6 +97,8 @@ class _BloodGroupState extends State<BloodGroup> {
 //
 
 class PatientName extends StatefulWidget {
+  static TextEditingController patientnamecontroller =
+      new TextEditingController();
   @override
   _PatientNameState createState() => _PatientNameState();
 }
@@ -121,6 +123,7 @@ class _PatientNameState extends State<PatientName> {
           height: 70,
           child: Center(
             child: TextField(
+              controller: PatientName.patientnamecontroller,
               cursorColor: Theme.of(context).primaryColor,
               style: TextStyle(fontFamily: 'SFPro', fontSize: 20),
               decoration: InputDecoration(
@@ -150,17 +153,16 @@ class _PatientNameState extends State<PatientName> {
 //
 
 class Hospital extends StatefulWidget {
+  static TextEditingController namecontroller = new TextEditingController();
+  static TextEditingController phonecontroller = new TextEditingController();
+  static TextEditingController addresscontroller = new TextEditingController();
+  static String currentAddress;
+  static Position currentposition;
   @override
   _HospitalState createState() => _HospitalState();
 }
 
 class _HospitalState extends State<Hospital> {
-  TextEditingController namecontroller = new TextEditingController();
-  TextEditingController phonecontroller = new TextEditingController();
-  TextEditingController addresscontroller = new TextEditingController();
-  String _currentAddress;
-  Position _currentposition;
-
   //-----------------------------
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
@@ -195,10 +197,10 @@ class _HospitalState extends State<Hospital> {
       Placemark place = placemarks[0];
 
       setState(() {
-        _currentposition = position;
-        _currentAddress =
+        Hospital.currentposition = position;
+        Hospital.currentAddress =
             "${place.locality}, ${place.postalCode}, ${place.country}";
-        addresscontroller.text = _currentAddress;
+        Hospital.addresscontroller.text = Hospital.currentAddress;
       });
     } catch (e) {
       print(e);
@@ -224,7 +226,7 @@ class _HospitalState extends State<Hospital> {
           height: 70,
           child: Center(
             child: TextField(
-              controller: namecontroller,
+              controller: Hospital.namecontroller,
               cursorColor: Theme.of(context).primaryColor,
               style: TextStyle(fontFamily: 'SFPro', fontSize: 20),
               decoration: InputDecoration(
@@ -243,7 +245,7 @@ class _HospitalState extends State<Hospital> {
           height: 70,
           child: Center(
             child: TextField(
-              controller: addresscontroller,
+              controller: Hospital.addresscontroller,
               cursorColor: Theme.of(context).primaryColor,
               style: TextStyle(fontFamily: 'SFPro', fontSize: 20),
               decoration: InputDecoration(
@@ -282,12 +284,12 @@ class _HospitalState extends State<Hospital> {
 //
 
 class Contact extends StatefulWidget {
+  static TextEditingController phonecontroller = TextEditingController();
   @override
   _ContactState createState() => _ContactState();
 }
 
 class _ContactState extends State<Contact> {
-  TextEditingController phonecontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -308,7 +310,7 @@ class _ContactState extends State<Contact> {
           child: Center(
             child: TextField(
               keyboardType: TextInputType.phone,
-              controller: phonecontroller,
+              controller: Contact.phonecontroller,
               cursorColor: Theme.of(context).primaryColor,
               style: TextStyle(fontFamily: 'SFPro', fontSize: 20),
               decoration: InputDecoration(

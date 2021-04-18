@@ -54,7 +54,9 @@ class _AuthFormState extends State<AuthForm> {
     if (isValid) {
       _formkey.currentState.save();
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => OTPScreen(phone)));
+          context,
+          MaterialPageRoute(
+              builder: (context) => OTPScreen(phone, firstname + lastname)));
     }
   }
 

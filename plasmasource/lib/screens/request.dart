@@ -4,24 +4,28 @@ import 'package:plasmasource/utils/text.dart';
 import 'package:plasmasource/utils/widgets.dart';
 
 class Request extends StatefulWidget {
+  final String uid;
+
+  const Request({Key key, this.uid}) : super(key: key);
   @override
   _RequestState createState() => _RequestState();
 }
 
 class _RequestState extends State<Request> {
-  TextEditingController namecontroller;
-
+  //------------------FUNCTIONS-----------------
+  placerequest() async {}
+  //------------------FUNCTIONS-----------------
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: Container(
           child: FloatingActionButton.extended(
-              backgroundColor: Theme.of(context).primaryColor,
-              label: bold_text(text: 'Place Request'),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Request()));
-              })),
+        backgroundColor: Theme.of(context).primaryColor,
+        label: bold_text(text: 'Place Request'),
+        onPressed: () {
+          print(widget.uid);
+        },
+      )),
       appBar: AppBar(
           title: appbar(
         title: 'Create Request for Plasma',

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
@@ -5,8 +6,8 @@ import 'package:pinput/pin_put/pin_put.dart';
 import '../home.dart';
 
 class OTPScreen extends StatefulWidget {
-  final String phone;
-  OTPScreen(this.phone);
+  final String phone, name;
+  OTPScreen(this.phone, this.name);
   @override
   _OTPScreenState createState() => _OTPScreenState();
 }
@@ -59,6 +60,15 @@ class _OTPScreenState extends State<OTPScreen> {
                   await FirebaseAuth.instance.signInWithCredential(
                       PhoneAuthProvider.credential(
                           verificationId: _verificationCode, smsCode: pin));
+                  final uid = FirebaseAuth.instance.currentUser.uid;
+                  await FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(uid)
+                      .set({
+                    'uid': uid,
+                    'phone': widget.phone,
+                    'name': widget.name
+                  });
                   Navigator.pop(context);
                 } catch (e) {
                   FocusScope.of(context).unfocus();

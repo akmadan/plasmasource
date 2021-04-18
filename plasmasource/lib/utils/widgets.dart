@@ -21,6 +21,9 @@ class appbar extends StatelessWidget {
 }
 
 class floating extends StatelessWidget {
+  final String uid;
+
+  const floating({Key key, this.uid}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,19 +31,16 @@ class floating extends StatelessWidget {
             backgroundColor: Theme.of(context).primaryColor,
             label: bold_text(text: 'Create Request'),
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Request()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Request(uid: uid)));
             }));
   }
 }
 
 class drawer extends StatelessWidget {
   final String uid;
-  final String username;
-  final String email, aname;
 
-  const drawer({Key key, this.uid, this.username, this.email, this.aname})
-      : super(key: key);
+  const drawer({Key key, this.uid}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Drawer(
