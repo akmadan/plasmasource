@@ -1,32 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:plasmasource/utils/text.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
-class RequestBubble extends StatefulWidget {
-  static String distance = '';
-  final String name, hospitaladdress, hospitalname, contact, bg;
+class DonorBubble extends StatefulWidget {
+  final String name, donoraddress, contact, bg;
   final double lat, lon;
 
-  const RequestBubble(
+  const DonorBubble(
       {Key key,
       this.name,
-      this.hospitaladdress,
-      this.hospitalname,
+      this.donoraddress,
       this.contact,
       this.bg,
       this.lat,
       this.lon})
       : super(key: key);
   @override
-  _RequestBubbleState createState() => _RequestBubbleState();
+  _DonorBubbleState createState() => _DonorBubbleState();
 }
 
-class _RequestBubbleState extends State<RequestBubble> {
-  
+class _DonorBubbleState extends State<DonorBubble> {
+  String distance = '';
   @override
   void initState() {
     super.initState();
@@ -40,7 +37,7 @@ class _RequestBubbleState extends State<RequestBubble> {
             myposition.latitude, myposition.longitude, widget.lat, widget.lon) /
         1000;
     setState(() {
-      RequestBubble.distance = distanceInMeters.toStringAsFixed(1);
+      distance = distanceInMeters.toStringAsFixed(1);
     });
   }
 
@@ -72,11 +69,7 @@ class _RequestBubbleState extends State<RequestBubble> {
                           height: 8,
                         ),
                         modified_text(
-                          text: widget.hospitalname,
-                          size: 18,
-                        ),
-                        modified_text(
-                          text: widget.hospitaladdress,
+                          text: widget.donoraddress,
                           size: 18,
                         ),
                         SizedBox(
@@ -89,7 +82,7 @@ class _RequestBubbleState extends State<RequestBubble> {
                                 color: Colors.grey.shade200,
                                 borderRadius: BorderRadius.circular(20)),
                             child: modified_text(
-                              text: RequestBubble.distance + ' km away',
+                              text: distance + ' km away',
                               size: 18,
                             ))
                       ],
@@ -212,8 +205,7 @@ class _RequestBubbleState extends State<RequestBubble> {
             modified_text(text: widget.contact, size: 18),
             Divider(),
             bold_text(text: 'Hospital Info', size: 20),
-            modified_text(text: widget.hospitalname, size: 18),
-            modified_text(text: widget.hospitaladdress, size: 18),
+            modified_text(text: widget.donoraddress, size: 18),
           ],
         ),
       ),

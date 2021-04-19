@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:plasmasource/donor/becomedonor.dart';
 import 'package:plasmasource/placerequest/requests.dart';
 
 import 'package:plasmasource/utils/text.dart';
@@ -20,10 +21,10 @@ class appbar extends StatelessWidget {
   }
 }
 
-class floating extends StatelessWidget {
+class floating_requests extends StatelessWidget {
   final String uid;
 
-  const floating({Key key, this.uid}) : super(key: key);
+  const floating_requests({Key key, this.uid}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,6 +34,23 @@ class floating extends StatelessWidget {
             onPressed: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => Request(uid: uid)));
+            }));
+  }
+}
+
+class floating_donor extends StatelessWidget {
+  final String uid;
+
+  const floating_donor({Key key, this.uid}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: FloatingActionButton.extended(
+            backgroundColor: Theme.of(context).primaryColor,
+            label: modified_text(text: 'Become Donor', size: 18),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => BecomeDonor(uid: uid)));
             }));
   }
 }

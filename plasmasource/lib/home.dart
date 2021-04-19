@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:plasmasource/allrequests/all.dart';
+import 'package:plasmasource/donor/alldonors.dart';
+
 import 'package:plasmasource/utils/widgets.dart';
+
+import 'allrequests/allrequests.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -35,17 +36,33 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: drawer(uid: useruid),
-      floatingActionButton: floating(uid: useruid),
-      appBar: AppBar(
-        title: appbar(title: 'PlasmaSource'),
-      ),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: All(),
-      ),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+          drawer: drawer(uid: useruid),
+          appBar: AppBar(
+            bottom: TabBar(
+              tabs: [
+                Tab(
+                  icon: Icon(Icons.local_hospital),
+                  text: 'Requests',
+                ),
+                Tab(
+                  icon: Icon(Icons.person_pin_rounded),
+                  text: 'Donors',
+                ),
+              ],
+            ),
+            title: appbar(title: 'PlasmaSource'),
+          ),
+          body: TabBarView(children: [
+            All(
+              useruid: useruid,
+            ),
+            AllDonors(
+              useruid: useruid,
+            )
+          ])),
     );
   }
 }

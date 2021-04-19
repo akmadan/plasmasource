@@ -1,9 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:plasmasource/utils/text.dart';
-
 //
 //
 //
@@ -18,13 +12,19 @@ import 'package:plasmasource/utils/text.dart';
 //
 //
 
-class BloodGroup extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:plasmasource/utils/text.dart';
+
+class BloodGroupDONOR extends StatefulWidget {
   static String bloodgroup = 'A+';
   @override
-  _BloodGroupState createState() => _BloodGroupState();
+  _BloodGroupDONORState createState() => _BloodGroupDONORState();
 }
 
-class _BloodGroupState extends State<BloodGroup> {
+class _BloodGroupDONORState extends State<BloodGroupDONOR> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,8 +33,7 @@ class _BloodGroupState extends State<BloodGroup> {
         children: [
           Expanded(
             child: Container(
-                child:
-                    modified_text(text: 'Blood Group of Patient: ', size: 18)),
+                child: modified_text(text: 'Blood Group of Donor: ', size: 18)),
           ),
           Expanded(
             child: Container(
@@ -46,7 +45,7 @@ class _BloodGroupState extends State<BloodGroup> {
                 height: 60.0,
                 child: DropdownButton<String>(
                   isExpanded: true,
-                  value: BloodGroup.bloodgroup,
+                  value: BloodGroupDONOR.bloodgroup,
                   iconSize: 24,
                   elevation: 16,
                   style: const TextStyle(color: Colors.black),
@@ -56,7 +55,7 @@ class _BloodGroupState extends State<BloodGroup> {
                   ),
                   onChanged: (String newValue) {
                     setState(() {
-                      BloodGroup.bloodgroup = newValue;
+                      BloodGroupDONOR.bloodgroup = newValue;
                     });
                   },
                   items: <String>[
@@ -88,7 +87,7 @@ class _BloodGroupState extends State<BloodGroup> {
 //
 //
 //
-// -----------------PATIENT NAME----------------------
+// -----------------DONOR NAME----------------------
 //
 //
 //
@@ -96,21 +95,21 @@ class _BloodGroupState extends State<BloodGroup> {
 //
 //
 
-class PatientName extends StatefulWidget {
+class PatientNameDONOR extends StatefulWidget {
   static TextEditingController patientnamecontroller =
       new TextEditingController();
   @override
-  _PatientNameState createState() => _PatientNameState();
+  _PatientNameDONORState createState() => _PatientNameDONORState();
 }
 
-class _PatientNameState extends State<PatientName> {
+class _PatientNameDONORState extends State<PatientNameDONOR> {
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         bold_text(
-          text: 'Patient Details',
+          text: 'Donor Details',
           size: 24,
           color: Colors.grey[700],
         ),
@@ -123,12 +122,12 @@ class _PatientNameState extends State<PatientName> {
           height: 70,
           child: Center(
             child: TextField(
-              controller: PatientName.patientnamecontroller,
+              controller: PatientNameDONOR.patientnamecontroller,
               cursorColor: Theme.of(context).primaryColor,
               style: TextStyle(fontFamily: 'SFPro', fontSize: 20),
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: "Enter Patient's Name",
+                hintText: "Enter Donor's Name",
               ),
             ),
           ),
@@ -144,7 +143,7 @@ class _PatientNameState extends State<PatientName> {
 //
 //
 //
-// -----------------HOSPITAL----------------------
+// -----------------CONTACT DONOR----------------------
 //
 //
 //
@@ -152,17 +151,74 @@ class _PatientNameState extends State<PatientName> {
 //
 //
 
-class Hospital extends StatefulWidget {
-  static TextEditingController namecontroller = new TextEditingController();
+class ContactDONOR extends StatefulWidget {
+  static TextEditingController phonecontroller = TextEditingController();
+  @override
+  _ContactDONORState createState() => _ContactDONORState();
+}
+
+class _ContactDONORState extends State<ContactDONOR> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        bold_text(
+          text: 'Contact Details',
+          size: 24,
+          color: Colors.grey[700],
+        ),
+        SizedBox(height: 10),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade400.withOpacity(0.2),
+          ),
+          padding: EdgeInsets.all(10),
+          height: 70,
+          child: Center(
+            child: TextField(
+              maxLength: 10,
+              keyboardType: TextInputType.phone,
+              controller: ContactDONOR.phonecontroller,
+              cursorColor: Theme.of(context).primaryColor,
+              style: TextStyle(fontFamily: 'SFPro', fontSize: 20),
+              decoration: InputDecoration(
+                counterText: '',
+                border: InputBorder.none,
+                hintText: "Enter Contact No.",
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+//
+//
+//
+//
+//
+//
+// -----------------Donor Address----------------------
+//
+//
+//
+//
+//
+//
+
+class DonorAddress extends StatefulWidget {
   static TextEditingController phonecontroller = new TextEditingController();
   static TextEditingController addresscontroller = new TextEditingController();
   static String currentAddress;
   static Position currentposition;
   @override
-  _HospitalState createState() => _HospitalState();
+  _DonorAddressState createState() => _DonorAddressState();
 }
 
-class _HospitalState extends State<Hospital> {
+class _DonorAddressState extends State<DonorAddress> {
   @override
   void initState() {
     super.initState();
@@ -203,10 +259,10 @@ class _HospitalState extends State<Hospital> {
       Placemark place = placemarks[0];
 
       setState(() {
-        Hospital.currentposition = position;
-        Hospital.currentAddress =
+        DonorAddress.currentposition = position;
+        DonorAddress.currentAddress =
             "${place.locality}, ${place.postalCode}, ${place.country}";
-        Hospital.addresscontroller.text = Hospital.currentAddress;
+        DonorAddress.addresscontroller.text = DonorAddress.currentAddress;
       });
     } catch (e) {
       print(e);
@@ -219,7 +275,7 @@ class _HospitalState extends State<Hospital> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         bold_text(
-          text: 'Hospital Details',
+          text: 'Donor Address',
           size: 24,
           color: Colors.grey[700],
         ),
@@ -232,26 +288,7 @@ class _HospitalState extends State<Hospital> {
           height: 70,
           child: Center(
             child: TextField(
-              controller: Hospital.namecontroller,
-              cursorColor: Theme.of(context).primaryColor,
-              style: TextStyle(fontFamily: 'SFPro', fontSize: 20),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: "Hospital Name",
-              ),
-            ),
-          ),
-        ),
-        SizedBox(height: 10),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.grey.shade400.withOpacity(0.2),
-          ),
-          padding: EdgeInsets.all(10),
-          height: 70,
-          child: Center(
-            child: TextField(
-              controller: Hospital.addresscontroller,
+              controller: DonorAddress.addresscontroller,
               cursorColor: Theme.of(context).primaryColor,
               style: TextStyle(fontFamily: 'SFPro', fontSize: 20),
               decoration: InputDecoration(
@@ -270,64 +307,6 @@ class _HospitalState extends State<Hospital> {
               text: 'Take Current Address',
               color: Theme.of(context).primaryColor),
         )),
-      ],
-    );
-  }
-}
-
-//
-//
-//
-//
-//
-//
-// -----------------CONTACT----------------------
-//
-//
-//
-//
-//
-//
-
-class Contact extends StatefulWidget {
-  static TextEditingController phonecontroller = TextEditingController();
-  @override
-  _ContactState createState() => _ContactState();
-}
-
-class _ContactState extends State<Contact> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        bold_text(
-          text: 'Contact Details',
-          size: 24,
-          color: Colors.grey[700],
-        ),
-        SizedBox(height: 10),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.grey.shade400.withOpacity(0.2),
-          ),
-          padding: EdgeInsets.all(10),
-          height: 70,
-          child: Center(
-            child: TextField(
-              maxLength: 10,
-              keyboardType: TextInputType.phone,
-              controller: Contact.phonecontroller,
-              cursorColor: Theme.of(context).primaryColor,
-              style: TextStyle(fontFamily: 'SFPro', fontSize: 20),
-              decoration: InputDecoration(
-                counterText: '',
-                border: InputBorder.none,
-                hintText: "Enter Contact No.",
-              ),
-            ),
-          ),
-        ),
       ],
     );
   }

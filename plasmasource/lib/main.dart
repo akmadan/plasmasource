@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:plasmasource/screens/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
