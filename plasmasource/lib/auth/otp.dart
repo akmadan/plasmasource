@@ -2,12 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+import 'package:plasmasource/utils/text.dart';
 
 import '../home.dart';
 
 class OTPScreen extends StatefulWidget {
-  final String phone, name;
-  OTPScreen(this.phone, this.name);
+  final String phone;
+  OTPScreen(this.phone);
   @override
   _OTPScreenState createState() => _OTPScreenState();
 }
@@ -36,10 +37,7 @@ class _OTPScreenState extends State<OTPScreen> {
           Container(
             margin: EdgeInsets.only(top: 40),
             child: Center(
-              child: Text(
-                'Verify +91' + widget.phone,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
-              ),
+              child: bold_text(text: 'Verify +91' + widget.phone, size: 24),
             ),
           ),
           Padding(
@@ -67,7 +65,6 @@ class _OTPScreenState extends State<OTPScreen> {
                       .set({
                     'uid': uid,
                     'phone': widget.phone,
-                    'name': widget.name
                   });
                   Navigator.pop(context);
                 } catch (e) {

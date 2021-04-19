@@ -2,9 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:plasmasource/donor/becomedonor.dart';
 import 'package:plasmasource/placerequest/requests.dart';
+import 'package:plasmasource/screens/aboutus.dart';
+import 'package:plasmasource/screens/myrequests.dart';
 
 import 'package:plasmasource/utils/text.dart';
 import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class appbar extends StatelessWidget {
   final String title;
@@ -49,8 +52,10 @@ class floating_donor extends StatelessWidget {
             backgroundColor: Theme.of(context).primaryColor,
             label: modified_text(text: 'Become Donor', size: 18),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => BecomeDonor(uid: uid)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BecomeDonor(uid: uid)));
             }));
   }
 }
@@ -59,6 +64,8 @@ class drawer extends StatelessWidget {
   final String uid;
 
   const drawer({Key key, this.uid}) : super(key: key);
+  static String _url =
+      'http://play.google.com/store/apps/details?id=com.benzene.plasmasource';
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -70,7 +77,8 @@ class drawer extends StatelessWidget {
               children: <Widget>[
                 DrawerHeader(
                   child: Container(
-                    child: Image.asset('assets/girl.png', fit: BoxFit.cover),
+                    padding: EdgeInsets.all(20),
+                    child: Image.asset('assets/logo.png'),
                   ),
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor,
@@ -82,17 +90,14 @@ class drawer extends StatelessWidget {
                     text: 'My Requests',
                     size: 17,
                   ),
-                  // onTap: () {
-                  //   Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //           builder: (context) => ProfileScreen(
-                  //                 uid: uid,
-                  //                 username: username,
-                  //                 email: email,
-                  //                 aname: aname,
-                  //               )));
-                  // },
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyRequests(
+                                  uid: uid,
+                                )));
+                  },
                 ),
                 ListTile(
                   leading: Icon(Icons.share),
@@ -112,14 +117,11 @@ class drawer extends StatelessWidget {
                     text: 'Rate Us',
                     size: 17,
                   ),
-                  // onTap: () {
-                  //   Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //           builder: (context) => ConnectRequestsScreen(
-                  //                 uid: uid,
-                  //               )));
-                  // },
+                  onTap: () async {
+                    await canLaunch(_url)
+                        ? await launch(_url)
+                        : throw 'Could not launch $_url';
+                  },
                 ),
                 ListTile(
                   leading: Icon(Icons.local_post_office),
@@ -127,14 +129,10 @@ class drawer extends StatelessWidget {
                     text: 'About Us',
                     size: 17,
                   ),
-                  // onTap: () {
-                  //   Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //           builder: (context) => ConnectRequestsScreen(
-                  //                 uid: uid,
-                  //               )));
-                  // },
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => AboutUs()));
+                  },
                 ),
                 ListTile(
                   leading: Icon(Icons.logout),
@@ -161,5 +159,46 @@ class drawer extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class logo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+        child: Container(
+      child: Stack(children: [
+        Positioned(
+            left: -100,
+            top: -150,
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor.withOpacity(0.4),
+                  borderRadius: BorderRadius.circular(600)),
+              height: 300,
+              width: 300,
+            )),
+        Positioned(
+            right: -200,
+            top: -200,
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(1000)),
+              height: 500,
+              width: 500,
+            )),
+        // Positioned(
+        //     left: 30,
+        //     top: 120,
+        //     child: Container(
+        //       decoration: BoxDecoration(
+        //           color: Theme.of(context).primaryColor.withOpacity(0.1),
+        //           borderRadius: BorderRadius.circular(200)),
+        //       height: 100,
+        //       width: 100,
+        //     )),
+      ]),
+    ));
   }
 }

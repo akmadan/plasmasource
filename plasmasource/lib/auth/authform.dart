@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:plasmasource/auth/otp.dart';
 import 'package:plasmasource/utils/text.dart';
+import 'package:plasmasource/utils/widgets.dart';
 
 class AuthForm extends StatefulWidget {
   @override
@@ -13,39 +14,8 @@ class AuthForm extends StatefulWidget {
 class _AuthFormState extends State<AuthForm> {
   //------------------------------------------------
   final _formkey = GlobalKey<FormState>();
-  var isLoginpage = false;
+
   var phone = '';
-
-  var firstname = '';
-  var lastname = '';
-
-  //------------------------------------------------
-
-  void login() async {
-    //   final isValid = _formkey.currentState.validate();
-    //   FocusScope.of(context).unfocus();
-    //   if (isValid) {
-    //     _formkey.currentState.save();
-    //     final _auth = FirebaseAuth.instance;
-    //     // UserCredential authresult;
-    //     try {
-    //       await _auth.signInWithEmailAndPassword(
-    //           email: email, password: password);
-    //     } on PlatformException catch (err) {
-    //       var message = 'An error occured';
-    //       if (err.message != null) {
-    //         message = err.message;
-    //       }
-
-    //       Scaffold.of(context).showSnackBar(SnackBar(
-    //         content: Text(message),
-    //         backgroundColor: Colors.red,
-    //       ));
-    //     } catch (err) {
-    //       print(err);
-    //     }
-    //   }
-  }
 
   //----------------------------------------------
   void trysubmit() async {
@@ -54,9 +24,7 @@ class _AuthFormState extends State<AuthForm> {
     if (isValid) {
       _formkey.currentState.save();
       Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => OTPScreen(phone, firstname + lastname)));
+          context, MaterialPageRoute(builder: (context) => OTPScreen(phone)));
     }
   }
 
@@ -64,92 +32,62 @@ class _AuthFormState extends State<AuthForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(20),
-      child: ListView(
+     
+      child: Column(
         children: [
-          // authimage(),
-          SizedBox(
-            height: 20,
-          ),
+          logo(),
           Container(
+            child: Column(children: [
+              Container(
+                height: 80,
+                width: 80,
+                decoration: BoxDecoration(
+                    image:
+                        DecorationImage(image: AssetImage('assets/logo.png')),
+                    borderRadius: BorderRadius.circular(20)),
+              ),
+              SizedBox(height: 10),
+              bold_text(text: 'PlasmaSource', color: Colors.grey[800], size: 20)
+            ]),
+          ),
+          SizedBox(height: 10),
+          Container(
+            margin: EdgeInsets.only(left: 20, right: 20),
             child: Form(
               key: _formkey,
               child: Column(
                 children: [
-                  //----------------- NAME -----------------------
-                  if (!isLoginpage)
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            key: ValueKey('firstname'),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'First Name should not be empty';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(8.0),
-                                    borderSide: new BorderSide()),
-                                labelText: "First Name",
-                                labelStyle: TextStyle(fontFamily: 'SFPro')),
-                            onSaved: (value) {
-                              firstname = value;
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: TextFormField(
-                            key: ValueKey('lastname'),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Last Name should not be empty';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(8.0),
-                                    borderSide: new BorderSide()),
-                                labelText: "Last Name",
-                                labelStyle: TextStyle(fontFamily: 'SFPro')),
-                            onSaved: (value) {
-                              lastname = value;
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  //----------------- NAME -----------------------
-
                   //---------------- PHONE ----------------------
                   Padding(padding: EdgeInsets.only(top: 10.0)),
-                  TextFormField(
-                    maxLength: 10,
-                    keyboardType: TextInputType.phone,
-                    key: ValueKey('phone'),
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Incorrect Phone';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(8.0),
-                            borderSide: new BorderSide()),
-                        labelText: "Enter Phone",
-                        labelStyle: GoogleFonts.roboto()),
-                    onSaved: (value) {
-                      phone = value;
-                    },
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade400.withOpacity(0.2),
+                    ),
+                    padding: EdgeInsets.all(10),
+                    height: 70,
+                    child: Center(
+                      child: TextFormField(
+                        maxLength: 10,
+                        keyboardType: TextInputType.phone,
+                        cursorColor: Theme.of(context).primaryColor,
+                        style: TextStyle(fontFamily: 'SFPro', fontSize: 20),
+                        decoration: InputDecoration(
+                          counterText: '',
+                          border: InputBorder.none,
+                          hintText: "Enter Contact No.",
+                        ),
+                        key: ValueKey('phone'),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Incorrect Phone';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          phone = value;
+                        },
+                      ),
+                    ),
                   ),
                   Padding(padding: EdgeInsets.only(top: 10.0)),
 
@@ -159,42 +97,23 @@ class _AuthFormState extends State<AuthForm> {
             ),
           ),
           Container(
+            margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
             height: 60,
+            width: double.infinity,
             padding: EdgeInsets.only(
               top: 10,
             ),
             child: RaisedButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
+                shape: RoundedRectangleBorder(),
                 color: Theme.of(context).primaryColor,
                 onPressed: () {
-                  isLoginpage ? login() : trysubmit();
+                  trysubmit();
                 },
-                child: isLoginpage
-                    ? bold_text(
-                        text: "Login",
-                        size: 18,
-                        color: Colors.white,
-                      )
-                    : bold_text(
-                        text: "Next",
-                        size: 18,
-                        color: Colors.white,
-                      )),
-          ),
-          TextButton(
-            onPressed: () {
-              setState(() {
-                isLoginpage = !isLoginpage;
-              });
-            },
-            child: Text(
-              isLoginpage
-                  ? 'New to PlasmaSource ? Create account'
-                  : 'Already have an account ? Login',
-              style: TextStyle(
-                  fontFamily: 'SFPro', color: Theme.of(context).primaryColor),
-            ),
+                child: bold_text(
+                  text: "Next",
+                  size: 18,
+                  color: Colors.white,
+                )),
           ),
         ],
       ),

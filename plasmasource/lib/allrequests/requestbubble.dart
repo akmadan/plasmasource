@@ -1,5 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:plasmasource/utils/text.dart';
@@ -7,6 +7,7 @@ import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class RequestBubble extends StatefulWidget {
+  final bool ismine;
   static String distance = '';
   final String name, hospitaladdress, hospitalname, contact, bg;
   final double lat, lon;
@@ -19,19 +20,23 @@ class RequestBubble extends StatefulWidget {
       this.contact,
       this.bg,
       this.lat,
-      this.lon})
+      this.lon,
+      this.ismine})
       : super(key: key);
   @override
   _RequestBubbleState createState() => _RequestBubbleState();
 }
 
 class _RequestBubbleState extends State<RequestBubble> {
-  
   @override
   void initState() {
     super.initState();
     getdistance();
   }
+
+  // deleterequest()async{
+  //   await FirebaseFirestore.instance.collection('allrequests')
+  // }
 
   getdistance() async {
     Position myposition = await Geolocator.getCurrentPosition(
@@ -48,73 +53,98 @@ class _RequestBubbleState extends State<RequestBubble> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        showAlertDialog(context);
+        if (widget.ismine == false) {
+          showAlertDialog(context);
+        }
       },
       child: Container(
           margin: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
-          child: Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            elevation: 5,
-            child: Container(
-              padding: EdgeInsets.all(15),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        bold_text(
-                          text: widget.name,
-                          size: 20,
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        modified_text(
-                          text: widget.hospitalname,
-                          size: 18,
-                        ),
-                        modified_text(
-                          text: widget.hospitaladdress,
-                          size: 18,
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Container(
-                            padding: EdgeInsets.only(
-                                left: 10, right: 10, top: 5, bottom: 5),
-                            decoration: BoxDecoration(
-                                color: Colors.grey.shade200,
-                                borderRadius: BorderRadius.circular(20)),
-                            child: modified_text(
-                              text: RequestBubble.distance + ' km away',
+          child: Column(
+            children: [
+              Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                elevation: 5,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            bold_text(
+                              text: widget.name,
+                              size: 20,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            modified_text(
+                              text: widget.hospitalname,
                               size: 18,
-                            ))
-                      ],
-                    ),
+                            ),
+                            modified_text(
+                              text: widget.hospitaladdress,
+                              size: 18,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            !widget.ismine
+                                ? Container(
+                                    padding: EdgeInsets.only(
+                                        left: 10, right: 10, top: 5, bottom: 5),
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey.shade200,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: modified_text(
+                                      text: RequestBubble.distance + ' km away',
+                                      size: 18,
+                                    ))
+                                : Container()
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(160),
+                          color:
+                              Theme.of(context).primaryColor.withOpacity(0.8),
+                        ),
+                        child: Center(
+                            child: bold_text(
+                          text: widget.bg,
+                          size: 18,
+                          color: Colors.white,
+                        )),
+                      )
+                    ],
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(160),
-                      color: Theme.of(context).primaryColor.withOpacity(0.8),
-                    ),
-                    child: Center(
-                        child: bold_text(
-                      text: widget.bg,
-                      size: 18,
-                      color: Colors.white,
-                    )),
-                  )
-                ],
+                ),
               ),
-            ),
+              widget.ismine
+                  ? Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      elevation: 5,
+                      child: Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(15),
+                          child: Center(
+                              child: modified_text(
+                            text: 'Withdraw',
+                            size: 20,
+                          ))),
+                    )
+                  : Container()
+            ],
           )),
     );
   }

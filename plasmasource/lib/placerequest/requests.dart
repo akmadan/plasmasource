@@ -18,7 +18,7 @@ class Request extends StatefulWidget {
 class _RequestState extends State<Request> {
   //------------------FUNCTIONS-----------------
   placerequest() async {
-    String patientname =  PatientName.patientnamecontroller.text.toString();
+    String patientname = PatientName.patientnamecontroller.text.toString();
     String bg = BloodGroup.bloodgroup;
     String hospitalname = Hospital.namecontroller.text.toString();
     String hospitaladdress = Hospital.addresscontroller.text.toString();
@@ -28,22 +28,37 @@ class _RequestState extends State<Request> {
     String time = t.toString();
     String doc = time + contact;
     //------------------
-    if(patientname!='' && hospitalname!='' && hospitaladdress!='' && contact!=''){
-FirebaseFirestore.instance.collection('allrequests').doc(doc).set({
-      'patientname':patientname,
-      'bg': bg,
-      'hospitalname': hospitalname,
-      'hospitaladdress': hospitaladdress,
-      'contact': contact,
-  'latitude':position.latitude,
-  'longitude':position.longitude
-    });
-    Fluttertoast.showToast(msg: 'Request Placed');
-    }
-    else{
+    if (patientname != '' &&
+        hospitalname != '' &&
+        hospitaladdress != '' &&
+        contact != '') {
+      FirebaseFirestore.instance.collection('allrequests').doc(doc).set({
+        'patientname': patientname,
+        'bg': bg,
+        'hospitalname': hospitalname,
+        'hospitaladdress': hospitaladdress,
+        'contact': contact,
+        'latitude': position.latitude,
+        'longitude': position.longitude
+      });
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.uid)
+          .collection('myrequests')
+          .doc(doc)
+          .set({
+        'patientname': patientname,
+        'bg': bg,
+        'hospitalname': hospitalname,
+        'hospitaladdress': hospitaladdress,
+        'contact': contact,
+        'latitude': position.latitude,
+        'longitude': position.longitude
+      });
+      Fluttertoast.showToast(msg: 'Request Placed');
+    } else {
       Fluttertoast.showToast(msg: 'Please Fill Complete Information');
     }
-    
   }
 
   //------------------FUNCTIONS-----------------

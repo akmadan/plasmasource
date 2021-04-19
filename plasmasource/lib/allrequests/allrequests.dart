@@ -78,6 +78,7 @@ class _AllState extends State<All> {
                       itemBuilder: (context, index) {
                         if (docs[index]['bg'] == bloodgroup) {
                           return RequestBubble(
+                            ismine: false,
                             name: docs[index]['patientname'],
                             bg: docs[index]['bg'],
                             hospitalname: docs[index]['hospitalname'],
