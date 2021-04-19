@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:plasmasource/componenets/components.dart';
+
+import 'package:plasmasource/placerequest/components.dart';
 import 'package:plasmasource/utils/text.dart';
 import 'package:plasmasource/utils/widgets.dart';
 

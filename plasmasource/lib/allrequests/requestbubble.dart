@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:plasmasource/utils/text.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class RequestBubble extends StatefulWidget {
@@ -27,34 +28,11 @@ class _RequestBubbleState extends State<RequestBubble> {
   String distance = '';
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getdistance();
   }
 
   getdistance() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      Fluttertoast.showToast(msg: 'Please enable Your Location Service');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        Fluttertoast.showToast(msg: 'Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      Fluttertoast.showToast(
-          msg:
-              'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
     Position myposition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     double distanceInMeters = Geolocator.distanceBetween(
@@ -141,25 +119,80 @@ class _RequestBubbleState extends State<RequestBubble> {
   }
 
   //----------------------------------------------------
+  // //----------------------------------------------------
+  //  //----------------------------------------------------
+  //  //----------------------------------------------------
+  //  //----------------------------------------------------
+  //  //----------------------------------------------------
+  //  //----------------------------------------------------
+  //  //----------------------------------------------------
+  //  //----------------------------------------------------
+  //   //----------------------------------------------------
+  // //----------------------------------------------------
+  //  //----------------------------------------------------
+  //  //----------------------------------------------------
+  //  //----------------------------------------------------
+  //  //----------------------------------------------------
+  //  //----------------------------------------------------
+  //  //----------------------------------------------------
+  //  //----------------------------------------------------
+  //   //----------------------------------------------------
+  // //----------------------------------------------------
+  //  //----------------------------------------------------
+  //  //----------------------------------------------------
+  //  //----------------------------------------------------
+  //  //----------------------------------------------------
+  //  //----------------------------------------------------
+  //  //----------------------------------------------------
+  //  //----------------------------------------------------
 
   showAlertDialog(BuildContext context) {
-    Widget remindButton = Container(
-      width: 200,
-      height: 50,
-      child: InkWell(
-        onTap: () async {
-          await UrlLauncher.launch("tel://" + widget.contact.toString());
-        },
-        child: Card(
-          elevation: 8,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          child: Center(
-            child: modified_text(
-                text: 'Call', size: 20, color: Theme.of(context).primaryColor),
+    Widget callbutton = Row(
+      children: [
+        Container(
+          width: 120,
+          height: 50,
+          child: InkWell(
+            onTap: () async {
+              await UrlLauncher.launch("tel://" + widget.contact.toString());
+            },
+            child: Card(
+              elevation: 8,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              child: Center(
+                child: modified_text(
+                    text: 'Call',
+                    size: 20,
+                    color: Theme.of(context).primaryColor),
+              ),
+            ),
           ),
         ),
-      ),
+        Container(
+          width: 120,
+          height: 50,
+          child: InkWell(
+            onTap: () async {
+              await Share.share(widget.name +
+                  ' requires ' +
+                  widget.bg +
+                  ' blood Plasma Urgently. Contact: ' +
+                  widget.contact);
+            },
+            child: Card(
+              color: Theme.of(context).primaryColor,
+              elevation: 8,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              child: Center(
+                child:
+                    modified_text(text: 'Share', size: 20, color: Colors.white),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
 
     AlertDialog alert = AlertDialog(
@@ -184,7 +217,7 @@ class _RequestBubbleState extends State<RequestBubble> {
         ),
       ),
       actions: [
-        remindButton,
+        callbutton,
       ],
     );
 

@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:plasmasource/screens/requests.dart';
+import 'package:plasmasource/placerequest/requests.dart';
 
 import 'package:plasmasource/utils/text.dart';
+import 'package:share/share.dart';
 
 class appbar extends StatelessWidget {
   final String title;
@@ -28,7 +29,7 @@ class floating extends StatelessWidget {
     return Container(
         child: FloatingActionButton.extended(
             backgroundColor: Theme.of(context).primaryColor,
-            label: modified_text(text: 'Create Request', size:18),
+            label: modified_text(text: 'Create Request', size: 18),
             onPressed: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => Request(uid: uid)));
@@ -43,75 +44,102 @@ class drawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            child: Container(
-              child: Image.asset('assets/girl.png', fit: BoxFit.cover),
-            ),
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                DrawerHeader(
+                  child: Container(
+                    child: Image.asset('assets/girl.png', fit: BoxFit.cover),
+                  ),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                ListTile(
+                  leading: Icon(Icons.person),
+                  title: modified_text(
+                    text: 'My Requests',
+                    size: 17,
+                  ),
+                  // onTap: () {
+                  //   Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: (context) => ProfileScreen(
+                  //                 uid: uid,
+                  //                 username: username,
+                  //                 email: email,
+                  //                 aname: aname,
+                  //               )));
+                  // },
+                ),
+                ListTile(
+                  leading: Icon(Icons.share),
+                  title: modified_text(
+                    text: 'Share',
+                    size: 17,
+                  ),
+                  onTap: () async {
+                    await Share.share(
+                        'Download PlasmaSource App and help Humanity come out of this Hard Time of COVID-19 ' +
+                            'http://play.google.com/store/apps/details?id=com.benzene.plasmasource');
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.star),
+                  title: modified_text(
+                    text: 'Rate Us',
+                    size: 17,
+                  ),
+                  // onTap: () {
+                  //   Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: (context) => ConnectRequestsScreen(
+                  //                 uid: uid,
+                  //               )));
+                  // },
+                ),
+                ListTile(
+                  leading: Icon(Icons.local_post_office),
+                  title: modified_text(
+                    text: 'About Us',
+                    size: 17,
+                  ),
+                  // onTap: () {
+                  //   Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: (context) => ConnectRequestsScreen(
+                  //                 uid: uid,
+                  //               )));
+                  // },
+                ),
+                ListTile(
+                  leading: Icon(Icons.logout),
+                  title: modified_text(
+                    text: 'Logout',
+                    size: 17,
+                  ),
+                  onTap: () {
+                    FirebaseAuth.instance.signOut();
+                  },
+                ),
+              ],
             ),
           ),
-          ListTile(
-            leading: Icon(Icons.person),
-            title: modified_text(
-              text: 'Profile',
-              size: 17,
-            ),
-            // onTap: () {
-            //   Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //           builder: (context) => ProfileScreen(
-            //                 uid: uid,
-            //                 username: username,
-            //                 email: email,
-            //                 aname: aname,
-            //               )));
-            // },
-          ),
-          ListTile(
-            leading: Icon(Icons.star),
-            title: modified_text(
-              text: 'Starred Messages',
-              size: 17,
-            ),
-            // onTap: () {
-            //   Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //           builder: (context) => StarredScreen(
-            //                 uid: uid,
-            //               )));
-            // },
-          ),
-          ListTile(
-            leading: Icon(Icons.person_add_alt_1),
-            title: modified_text(
-              text: 'Connect Requests',
-              size: 17,
-            ),
-            // onTap: () {
-            //   Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //           builder: (context) => ConnectRequestsScreen(
-            //                 uid: uid,
-            //               )));
-            // },
-          ),
-          ListTile(
-            leading: Icon(Icons.logout),
-            title: modified_text(
-              text: 'Logout',
-              size: 17,
-            ),
-            onTap: () {
-              FirebaseAuth.instance.signOut();
-            },
-          ),
+          Container(
+              padding: EdgeInsets.all(5),
+              child: Center(
+                child: bold_text(
+                  text: 'By Benzene',
+                  size: 16,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ))
         ],
       ),
     );

@@ -34,6 +34,10 @@ dependencies:
   geolocator: ^7.0.3
   geocoding:
   url_launcher: 
+  
+  share: ^2.0.1
+  android_intent: 
+  permission_handler: 
 
 
 

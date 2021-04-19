@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:geolocator/geolocator.dart';
+import 'package:plasmasource/screens/nolocation.dart';
 import 'dart:async';
 
 import 'package:plasmasource/utils/text.dart';
@@ -21,8 +22,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<bool> _mockCheckForSession() async {
     await Future.delayed(Duration(milliseconds: 1500), () {});
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => Check()));
+    bool permission = await Geolocator.isLocationServiceEnabled();
+    if (permission) {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (BuildContext context) => Check()));
+    } else {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (BuildContext context) => NoLocation()));
+    }
+
     return true;
   }
 
