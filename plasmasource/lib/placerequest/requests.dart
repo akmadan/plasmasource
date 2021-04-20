@@ -35,6 +35,7 @@ class _RequestState extends State<Request> {
       FirebaseFirestore.instance.collection('allrequests').doc(doc).set({
         'patientname': patientname,
         'bg': bg,
+        'doc':doc,
         'hospitalname': hospitalname,
         'hospitaladdress': hospitaladdress,
         'contact': contact,
@@ -49,6 +50,7 @@ class _RequestState extends State<Request> {
           .set({
         'patientname': patientname,
         'bg': bg,
+        'doc': doc,
         'hospitalname': hospitalname,
         'hospitaladdress': hospitaladdress,
         'contact': contact,
@@ -68,7 +70,7 @@ class _RequestState extends State<Request> {
       floatingActionButton: Container(
           child: FloatingActionButton.extended(
         backgroundColor: Theme.of(context).primaryColor,
-        label: bold_text(text: 'Place Request'),
+        label: modified_text(text: 'Place Request', size: 18),
         onPressed: () {
           placerequest();
         },

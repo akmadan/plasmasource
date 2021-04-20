@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:plasmasource/utils/text.dart';
@@ -6,8 +8,9 @@ import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class DonorBubble extends StatefulWidget {
-  final String name, donoraddress, contact, bg;
+  final String uid, doc, name, donoraddress, contact, bg;
   final double lat, lon;
+  final bool isme;
 
   const DonorBubble(
       {Key key,
@@ -16,7 +19,10 @@ class DonorBubble extends StatefulWidget {
       this.contact,
       this.bg,
       this.lat,
-      this.lon})
+      this.lon,
+      this.uid,
+      this.doc,
+      this.isme})
       : super(key: key);
   @override
   _DonorBubbleState createState() => _DonorBubbleState();
@@ -28,6 +34,20 @@ class _DonorBubbleState extends State<DonorBubble> {
   void initState() {
     super.initState();
     getdistance();
+  }
+
+  deletedonor() async {
+    await FirebaseFirestore.instance
+        .collection('alldonors')
+        .doc(widget.doc)
+        .delete();
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.uid)
+        .collection('mydonations')
+        .doc(widget.doc)
+        .delete();
+    Fluttertoast.showToast(msg: 'Donor Deleted');
   }
 
   getdistance() async {
@@ -45,69 +65,99 @@ class _DonorBubbleState extends State<DonorBubble> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        showAlertDialog(context);
+        if (widget.isme == false) {
+          showAlertDialog(context);
+        }
       },
       child: Container(
           margin: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
-          child: Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            elevation: 5,
-            child: Container(
-              padding: EdgeInsets.all(15),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        bold_text(
-                          text: widget.name,
-                          size: 20,
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        modified_text(
-                          text: widget.donoraddress,
-                          size: 18,
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Container(
-                            padding: EdgeInsets.only(
-                                left: 10, right: 10, top: 5, bottom: 5),
-                            decoration: BoxDecoration(
-                                color: Colors.grey.shade200,
-                                borderRadius: BorderRadius.circular(20)),
-                            child: modified_text(
-                              text: distance + ' km away',
+          child: Column(
+            children: [
+              Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                elevation: 5,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            bold_text(
+                              text: widget.name,
+                              size: 20,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            modified_text(
+                              text: widget.donoraddress,
                               size: 18,
-                            ))
-                      ],
-                    ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            !widget.isme
+                                ? Container(
+                                    padding: EdgeInsets.only(
+                                        left: 10, right: 10, top: 5, bottom: 5),
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey.shade200,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: modified_text(
+                                      text: distance + ' km away',
+                                      size: 18,
+                                    ))
+                                : Container()
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(160),
+                          color:
+                              Theme.of(context).primaryColor.withOpacity(0.8),
+                        ),
+                        child: Center(
+                            child: bold_text(
+                          text: widget.bg,
+                          size: 18,
+                          color: Colors.white,
+                        )),
+                      )
+                    ],
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(160),
-                      color: Theme.of(context).primaryColor.withOpacity(0.8),
-                    ),
-                    child: Center(
-                        child: bold_text(
-                      text: widget.bg,
-                      size: 18,
-                      color: Colors.white,
-                    )),
-                  )
-                ],
+                ),
               ),
-            ),
+              widget.isme
+                  ? InkWell(
+                      onTap: () {
+                        deletedonor();
+                      },
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        elevation: 5,
+                        child: Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.all(15),
+                            child: Center(
+                                child: modified_text(
+                              text: 'Withdraw',
+                              size: 20,
+                            ))),
+                      ),
+                    )
+                  : Container()
+            ],
           )),
     );
   }
@@ -169,10 +219,14 @@ class _DonorBubbleState extends State<DonorBubble> {
           child: InkWell(
             onTap: () async {
               await Share.share(widget.name +
-                  ' requires ' +
+                  ' wants to donate ' +
                   widget.bg +
-                  ' blood Plasma Urgently. Contact: ' +
-                  widget.contact);
+                  ' blood Plasma. If anyone needs then Contact: ' +
+                  widget.contact +
+                  '\n' +
+                  'Download Plasma Source App to Place Plasma Request or to become a Donor. Your one donation will affect many lives.' +
+                  '\n' +
+                  'http://play.google.com/store/apps/details?id=com.benzene.plasmasource');
             },
             child: Card(
               color: Theme.of(context).primaryColor,

@@ -52,12 +52,23 @@ class _SplashScreenState extends State<SplashScreen> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25.0),
                       image: DecorationImage(
-                          image: AssetImage('assets/blood.png'))),
+                          image: AssetImage('assets/logo.png'))),
                 ),
                 SizedBox(height: 15),
                 bold_text(
-                    text: 'PlasmaSource', color: Colors.grey[700], size: 20)
+                    text: 'PlasmaSource', color: Colors.grey[700], size: 20),
               ],
+            ),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 20,
+            child: Center(
+              child: bold_text(
+                  text: 'By Benzene',
+                  size: 18,
+                  color: Theme.of(context).primaryColor),
             ),
           ),
         ]),

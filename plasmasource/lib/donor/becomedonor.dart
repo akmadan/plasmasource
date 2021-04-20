@@ -26,15 +26,30 @@ class _BecomeDonorState extends State<BecomeDonor> {
     String doc = time + contact;
     //------------------
     if (patientname != '' && hospitaladdress != '' && contact != '') {
-      FirebaseFirestore.instance.collection('alldonors').doc(doc).set({
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.uid)
+          .collection('mydonations')
+          .doc(doc)
+          .set({
         'donorname': patientname,
         'bg': bg,
+        'doc': doc,
         'donoraddress': hospitaladdress,
         'contact': contact,
         'latitude': position.latitude,
         'longitude': position.longitude
       });
-      Fluttertoast.showToast(msg: 'Request Placed');
+      FirebaseFirestore.instance.collection('alldonors').doc(doc).set({
+        'donorname': patientname,
+        'bg': bg,
+        'doc': doc,
+        'donoraddress': hospitaladdress,
+        'contact': contact,
+        'latitude': position.latitude,
+        'longitude': position.longitude
+      });
+      Fluttertoast.showToast(msg: 'You are a Donor');
     } else {
       Fluttertoast.showToast(msg: 'Please Fill Complete Information');
     }
@@ -46,7 +61,7 @@ class _BecomeDonorState extends State<BecomeDonor> {
       floatingActionButton: Container(
           child: FloatingActionButton.extended(
         backgroundColor: Theme.of(context).primaryColor,
-        label: bold_text(text: 'Become Donor'),
+        label: modified_text(text: 'Become Donor', size: 18),
         onPressed: () {
           becomedonor();
         },

@@ -1,30 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:plasmasource/allrequests/requestbubble.dart';
+import 'package:plasmasource/donor/donorbubble.dart';
 import 'package:plasmasource/utils/widgets.dart';
 
-class MyRequests extends StatefulWidget {
+class MyDonations extends StatefulWidget {
   final String uid;
 
-  const MyRequests({Key key, this.uid}) : super(key: key);
+  const MyDonations({Key key, this.uid}) : super(key: key);
   @override
-  _MyRequestsState createState() => _MyRequestsState();
+  _MyDonationsState createState() => _MyDonationsState();
 }
 
-class _MyRequestsState extends State<MyRequests> {
+class _MyDonationsState extends State<MyDonations> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: appbar(
-          title: 'My Requests',
+          title: 'My Donations',
         ),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('users')
             .doc(widget.uid)
-            .collection('myrequests')
+            .collection('mydonations')
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -36,14 +36,13 @@ class _MyRequestsState extends State<MyRequests> {
             return ListView.builder(
               itemCount: docs.length,
               itemBuilder: (context, index) {
-                return RequestBubble(
+                return DonorBubble(
                   doc: docs[index]['doc'],
                   uid: widget.uid,
-                  ismine: true,
-                  name: docs[index]['patientname'],
+                  isme: true,
+                  name: docs[index]['donorname'],
                   bg: docs[index]['bg'],
-                  hospitalname: docs[index]['hospitalname'],
-                  hospitaladdress: docs[index]['hospitaladdress'],
+                  donoraddress: docs[index]['donoraddress'],
                   contact: docs[index]['contact'],
                   lat: docs[index]['latitude'],
                   lon: docs[index]['longitude'],

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:plasmasource/utils/text.dart';
@@ -9,7 +10,7 @@ import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 class RequestBubble extends StatefulWidget {
   final bool ismine;
   static String distance = '';
-  final String name, hospitaladdress, hospitalname, contact, bg;
+  final String name, uid, doc, hospitaladdress, hospitalname, contact, bg;
   final double lat, lon;
 
   const RequestBubble(
@@ -21,7 +22,9 @@ class RequestBubble extends StatefulWidget {
       this.bg,
       this.lat,
       this.lon,
-      this.ismine})
+      this.ismine,
+      this.uid,
+      this.doc})
       : super(key: key);
   @override
   _RequestBubbleState createState() => _RequestBubbleState();
@@ -34,9 +37,19 @@ class _RequestBubbleState extends State<RequestBubble> {
     getdistance();
   }
 
-  // deleterequest()async{
-  //   await FirebaseFirestore.instance.collection('allrequests')
-  // }
+  deleterequest() async {
+    await FirebaseFirestore.instance
+        .collection('allrequests')
+        .doc(widget.doc)
+        .delete();
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.uid)
+        .collection('myrequests')
+        .doc(widget.doc)
+        .delete();
+    Fluttertoast.showToast(msg: 'Request Deleted');
+  }
 
   getdistance() async {
     Position myposition = await Geolocator.getCurrentPosition(
@@ -130,18 +143,23 @@ class _RequestBubbleState extends State<RequestBubble> {
                 ),
               ),
               widget.ismine
-                  ? Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      elevation: 5,
-                      child: Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.all(15),
-                          child: Center(
-                              child: modified_text(
-                            text: 'Withdraw',
-                            size: 20,
-                          ))),
+                  ? InkWell(
+                      onTap: () {
+                        deleterequest();
+                      },
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        elevation: 5,
+                        child: Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.all(15),
+                            child: Center(
+                                child: modified_text(
+                              text: 'Withdraw',
+                              size: 20,
+                            ))),
+                      ),
                     )
                   : Container()
             ],
@@ -209,7 +227,11 @@ class _RequestBubbleState extends State<RequestBubble> {
                   ' requires ' +
                   widget.bg +
                   ' blood Plasma Urgently. Contact: ' +
-                  widget.contact);
+                  widget.contact +
+                  '\n' +
+                  'Download Plasma Source App to Place Plasma Request or to become a Donor. Your one donation will affect many lives.' +
+                  '\n' +
+                  'http://play.google.com/store/apps/details?id=com.benzene.plasmasource');
             },
             child: Card(
               color: Theme.of(context).primaryColor,

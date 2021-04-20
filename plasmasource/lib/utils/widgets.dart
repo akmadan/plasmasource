@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:plasmasource/donor/becomedonor.dart';
 import 'package:plasmasource/placerequest/requests.dart';
 import 'package:plasmasource/screens/aboutus.dart';
+import 'package:plasmasource/screens/mydonations.dart';
 import 'package:plasmasource/screens/myrequests.dart';
 
 import 'package:plasmasource/utils/text.dart';
@@ -95,6 +96,21 @@ class drawer extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => MyRequests(
+                                  uid: uid,
+                                )));
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.local_hospital),
+                  title: modified_text(
+                    text: 'Withdraw as a Donor',
+                    size: 17,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyDonations(
                                   uid: uid,
                                 )));
                   },
