@@ -42,6 +42,7 @@ class _HomeState extends State<Home> {
           drawer: drawer(uid: useruid),
           appBar: AppBar(
             bottom: TabBar(
+              indicatorColor: Theme.of(context).primaryColor,
               tabs: [
                 Tab(
                   icon: Icon(Icons.local_hospital),

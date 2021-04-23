@@ -79,7 +79,10 @@ class drawer extends StatelessWidget {
                 DrawerHeader(
                   child: Container(
                     padding: EdgeInsets.all(20),
-                    child: Image.asset('assets/logo2.png', fit: BoxFit.cover,),
+                    child: Image.asset(
+                      'assets/logo2.png',
+                      fit: BoxFit.contain,
+                    ),
                   ),
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor,
@@ -214,7 +217,6 @@ class logo extends StatelessWidget {
               height: 100,
               width: 100,
             )),
-
       ]),
     ));
   }

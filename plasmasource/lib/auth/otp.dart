@@ -19,10 +19,10 @@ class _OTPScreenState extends State<OTPScreen> {
   final TextEditingController _pinPutController = TextEditingController();
   final FocusNode _pinPutFocusNode = FocusNode();
   final BoxDecoration pinPutDecoration = BoxDecoration(
-    color: const Color.fromRGBO(43, 46, 66, 1),
+    color: Colors.grey[100],
     borderRadius: BorderRadius.circular(10.0),
     border: Border.all(
-      color: const Color.fromRGBO(126, 203, 224, 1),
+      color: Colors.grey[900],
     ),
   );
   @override
@@ -30,29 +30,29 @@ class _OTPScreenState extends State<OTPScreen> {
     return Scaffold(
       key: _scaffoldkey,
       appBar: AppBar(
-        title: modified_text(text:'OTP Verification'),
+        title: modified_text(text: 'OTP Verification'),
       ),
       body: Center(
         child: ListView(
-          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height:50),
+            SizedBox(height: 50),
             Container(
-              height: 200,
-              width:200,
+              height: 160,
+              width: 160,
               child: Image.asset('assets/immigration.png'),
             ),
             Container(
               margin: EdgeInsets.only(top: 40),
               child: Center(
-                child: bold_text(text: 'Verify +91' + widget.phone, size: 24),
+                child:
+                    bold_text(text: 'OTP sent to +91' + widget.phone, size: 22),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: PinPut(
                 fieldsCount: 6,
-                textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
+                textStyle: const TextStyle(fontSize: 25.0, color: Colors.black),
                 eachFieldWidth: 40.0,
                 eachFieldHeight: 55.0,
                 focusNode: _pinPutFocusNode,
