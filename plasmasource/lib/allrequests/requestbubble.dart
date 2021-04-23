@@ -148,6 +148,7 @@ class _RequestBubbleState extends State<RequestBubble> {
                         deleterequest();
                       },
                       child: Card(
+                        color: Theme.of(context).primaryColor,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
                         elevation: 5,
@@ -157,6 +158,7 @@ class _RequestBubbleState extends State<RequestBubble> {
                             child: Center(
                                 child: modified_text(
                               text: 'Withdraw',
+                              color:Colors.white,
                               size: 20,
                             ))),
                       ),
@@ -231,7 +233,7 @@ class _RequestBubbleState extends State<RequestBubble> {
                   '\n' +
                   'Download Plasma Source App to Place Plasma Request or to become a Donor. Your one donation will affect many lives.' +
                   '\n' +
-                  'http://play.google.com/store/apps/details?id=com.benzene.plasmasource');
+                  'http://play.google.com/store/apps/details?id=com.benzene.plasmasource1');
             },
             child: Card(
               color: Theme.of(context).primaryColor,

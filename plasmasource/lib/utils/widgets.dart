@@ -66,7 +66,7 @@ class drawer extends StatelessWidget {
 
   const drawer({Key key, this.uid}) : super(key: key);
   static String _url =
-      'http://play.google.com/store/apps/details?id=com.benzene.plasmasource';
+      'http://play.google.com/store/apps/details?id=com.benzene.plasmasource1';
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -79,7 +79,7 @@ class drawer extends StatelessWidget {
                 DrawerHeader(
                   child: Container(
                     padding: EdgeInsets.all(20),
-                    child: Image.asset('assets/logo.png'),
+                    child: Image.asset('assets/logo2.png', fit: BoxFit.cover,),
                   ),
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor,
@@ -124,7 +124,7 @@ class drawer extends StatelessWidget {
                   onTap: () async {
                     await Share.share(
                         'Download PlasmaSource App and help Humanity come out of this Hard Time of COVID-19 ' +
-                            'http://play.google.com/store/apps/details?id=com.benzene.plasmasource');
+                            'http://play.google.com/store/apps/details?id=com.benzene.plasmasource1');
                   },
                 ),
                 ListTile(
@@ -166,10 +166,10 @@ class drawer extends StatelessWidget {
           Container(
               padding: EdgeInsets.all(5),
               child: Center(
-                child: bold_text(
+                child: modified_text(
                   text: 'By Benzene',
                   size: 16,
-                  color: Theme.of(context).primaryColor,
+                  color: Colors.grey[700],
                 ),
               ))
         ],
@@ -204,16 +204,17 @@ class logo extends StatelessWidget {
               height: 500,
               width: 500,
             )),
-        // Positioned(
-        //     left: 30,
-        //     top: 120,
-        //     child: Container(
-        //       decoration: BoxDecoration(
-        //           color: Theme.of(context).primaryColor.withOpacity(0.1),
-        //           borderRadius: BorderRadius.circular(200)),
-        //       height: 100,
-        //       width: 100,
-        //     )),
+        Positioned(
+            left: 40,
+            top: 160,
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(160)),
+              height: 100,
+              width: 100,
+            )),
+
       ]),
     ));
   }

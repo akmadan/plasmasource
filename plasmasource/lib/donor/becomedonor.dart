@@ -50,6 +50,7 @@ class _BecomeDonorState extends State<BecomeDonor> {
         'longitude': position.longitude
       });
       Fluttertoast.showToast(msg: 'You are a Donor');
+      Navigator.pop(context);
     } else {
       Fluttertoast.showToast(msg: 'Please Fill Complete Information');
     }

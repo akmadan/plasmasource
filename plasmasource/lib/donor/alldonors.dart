@@ -13,7 +13,7 @@ class AllDonors extends StatefulWidget {
 }
 
 class _AllDonorsState extends State<AllDonors> {
-  String bloodgroup = 'A+';
+  String bloodgroup = 'All Donors';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +45,7 @@ class _AllDonorsState extends State<AllDonors> {
                   });
                 },
                 items: <String>[
+                  'All Donors',
                   'A+',
                   'A-',
                   'B+',
@@ -76,7 +77,7 @@ class _AllDonorsState extends State<AllDonors> {
                     return ListView.builder(
                       itemCount: docs.length,
                       itemBuilder: (context, index) {
-                        if (docs[index]['bg'] == bloodgroup) {
+                        if(bloodgroup== 'All Donors'){
                           return DonorBubble(
                             isme: false,
                             name: docs[index]['donorname'],
@@ -86,8 +87,21 @@ class _AllDonorsState extends State<AllDonors> {
                             lat: docs[index]['latitude'],
                             lon: docs[index]['longitude'],
                           );
-                        } else {
-                          return Container();
+                        }
+                        else {
+                          if (docs[index]['bg'] == bloodgroup) {
+                            return DonorBubble(
+                              isme: false,
+                              name: docs[index]['donorname'],
+                              bg: docs[index]['bg'],
+                              donoraddress: docs[index]['donoraddress'],
+                              contact: docs[index]['contact'],
+                              lat: docs[index]['latitude'],
+                              lon: docs[index]['longitude'],
+                            );
+                          } else {
+                            return Container();
+                          }
                         }
                       },
                     );

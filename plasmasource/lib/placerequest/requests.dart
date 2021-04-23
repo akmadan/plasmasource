@@ -58,6 +58,7 @@ class _RequestState extends State<Request> {
         'longitude': position.longitude
       });
       Fluttertoast.showToast(msg: 'Request Placed');
+      Navigator.pop(context);
     } else {
       Fluttertoast.showToast(msg: 'Please Fill Complete Information');
     }

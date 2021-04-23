@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:293937172415:android:2befb2108de9210adc5b0a",
         "android_client_info": {
-          "package_name": "com.benzene.plasmasource"
+          "package_name": "com.benzene.plasmasource1"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "293937172415-m3j2ir07ahauf86m3jl68oafeuhpmpkl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.benzene.plasmasource",
+            "package_name": "com.benzene.plasmasource1",
             "certificate_hash": "957c09effb368786e96e080e3c3aa9ae921cc754"
           }
         },

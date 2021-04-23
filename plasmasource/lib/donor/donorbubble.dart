@@ -143,16 +143,19 @@ class _DonorBubbleState extends State<DonorBubble> {
                         deletedonor();
                       },
                       child: Card(
+                        color: Theme.of(context).primaryColor,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
                         elevation: 5,
                         child: Container(
+
                             width: double.infinity,
                             padding: EdgeInsets.all(15),
                             child: Center(
                                 child: modified_text(
                               text: 'Withdraw',
                               size: 20,
+                                  color: Colors.white,
                             ))),
                       ),
                     )
@@ -226,7 +229,7 @@ class _DonorBubbleState extends State<DonorBubble> {
                   '\n' +
                   'Download Plasma Source App to Place Plasma Request or to become a Donor. Your one donation will affect many lives.' +
                   '\n' +
-                  'http://play.google.com/store/apps/details?id=com.benzene.plasmasource');
+                  'http://play.google.com/store/apps/details?id=com.benzene.plasmasource1');
             },
             child: Card(
               color: Theme.of(context).primaryColor,
@@ -258,7 +261,7 @@ class _DonorBubbleState extends State<DonorBubble> {
             bold_text(text: 'Contact', size: 20),
             modified_text(text: widget.contact, size: 18),
             Divider(),
-            bold_text(text: 'Hospital Info', size: 20),
+            bold_text(text: 'Address', size: 20),
             modified_text(text: widget.donoraddress, size: 18),
           ],
         ),

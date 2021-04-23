@@ -47,9 +47,11 @@ class _AuthFormState extends State<AuthForm> {
                     borderRadius: BorderRadius.circular(20)),
               ),
               SizedBox(height: 10),
-              bold_text(text: 'PlasmaSource', color: Colors.grey[800], size: 20)
+              bold_text(text: 'PlasmaSource', color: Colors.grey[800], size: 24)
             ]),
           ),
+          SizedBox(height: 10),
+          modified_text(text:'Your One Donation can Save Many Lives', size:16),
           SizedBox(height: 10),
           Container(
             margin: EdgeInsets.only(left: 20, right: 20),
@@ -61,6 +63,7 @@ class _AuthFormState extends State<AuthForm> {
                   Padding(padding: EdgeInsets.only(top: 10.0)),
                   Container(
                     decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
                       color: Colors.grey.shade400.withOpacity(0.2),
                     ),
                     padding: EdgeInsets.all(10),
@@ -74,7 +77,7 @@ class _AuthFormState extends State<AuthForm> {
                         decoration: InputDecoration(
                           counterText: '',
                           border: InputBorder.none,
-                          hintText: "Enter Contact No.",
+                          hintText: "Enter 10 digit Contact No.",
                         ),
                         key: ValueKey('phone'),
                         validator: (value) {
@@ -97,6 +100,7 @@ class _AuthFormState extends State<AuthForm> {
             ),
           ),
           Container(
+
             margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
             height: 60,
             width: double.infinity,
@@ -104,7 +108,10 @@ class _AuthFormState extends State<AuthForm> {
               top: 10,
             ),
             child: RaisedButton(
-                shape: RoundedRectangleBorder(),
+
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
                 color: Theme.of(context).primaryColor,
                 onPressed: () {
                   trysubmit();
