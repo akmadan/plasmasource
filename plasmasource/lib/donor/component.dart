@@ -42,7 +42,7 @@ class _BloodGroupDONORState extends State<BloodGroupDONOR> {
                   color: Colors.grey.shade400.withOpacity(0.2),
                 ),
                 width: MediaQuery.of(context).size.width,
-                height: 60.0,
+                height: 70.0,
                 child: DropdownButton<String>(
                   isExpanded: true,
                   value: BloodGroupDONOR.bloodgroup,
@@ -132,6 +132,187 @@ class _PatientNameDONORState extends State<PatientNameDONOR> {
             ),
           ),
         ),
+      ],
+    );
+  }
+}
+//
+//
+//
+//
+//
+//
+// -----------------AGE GENDER----------------------
+//
+//
+//
+//
+//
+//
+//
+
+class AgeGender extends StatefulWidget {
+  static TextEditingController agecontrollerdonor = new TextEditingController();
+  static String gender = 'Male';
+  @override
+  _AgeGenderState createState() => _AgeGenderState();
+}
+
+class _AgeGenderState extends State<AgeGender> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          bold_text(
+            text: "Donor's Age & Gender",
+            size: 24,
+            color: Colors.grey[700],
+          ),
+          SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade400.withOpacity(0.2),
+                  ),
+                  padding: EdgeInsets.all(10),
+                  height: 70,
+                  child: Center(
+                    child: TextField(
+                      keyboardType: TextInputType.number,
+                      controller: AgeGender.agecontrollerdonor,
+                      cursorColor: Theme.of(context).primaryColor,
+                      style: TextStyle(fontFamily: 'SFPro', fontSize: 20),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Enter Donor's Age",
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: 8),
+              Expanded(
+                child: Container(
+                    padding: EdgeInsets.all(15.0),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade400.withOpacity(0.2),
+                    ),
+                    width: MediaQuery.of(context).size.width,
+                    height: 70.0,
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      value: AgeGender.gender,
+                      iconSize: 24,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.black),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.transparent,
+                      ),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          AgeGender.gender = newValue;
+                        });
+                      },
+                      items: <String>['Male', 'Female']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: modified_text(text: value, size: 20),
+                        );
+                      }).toList(),
+                    )),
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+          Message(
+            message: "Donor's age should lie between 18-55",
+          )
+        ],
+      ),
+    );
+  }
+}
+
+//
+//
+//
+//
+//
+//
+// -----------------DATE OF COVID----------------------
+//
+//
+//
+//
+//
+//
+//
+//
+class Dateofcovid extends StatefulWidget {
+  static DateTime selectedDate = DateTime.now();
+  @override
+  _DateofcovidState createState() => _DateofcovidState();
+}
+
+class _DateofcovidState extends State<Dateofcovid> {
+  _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: Dateofcovid.selectedDate, // Refer step 1
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
+    );
+    if (picked != null && picked != Dateofcovid.selectedDate)
+      setState(() {
+        Dateofcovid.selectedDate = picked;
+      });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        bold_text(
+          text: "Date of Tested Positive",
+          size: 24,
+          color: Colors.grey[700],
+        ),
+        SizedBox(height: 10),
+        InkWell(
+          onTap: () {
+            _selectDate(context);
+          },
+          child: Container(
+            padding: EdgeInsets.all(15.0),
+            decoration: BoxDecoration(
+              color: Colors.grey.shade400.withOpacity(0.2),
+            ),
+            width: 180,
+            height: 50.0,
+            child: Center(
+              child: bold_text(
+                text: Dateofcovid.selectedDate.day.toString() +
+                    '/' +
+                    Dateofcovid.selectedDate.month.toString() +
+                    '/' +
+                    Dateofcovid.selectedDate.year.toString(),
+                size: 18,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 10),
+        Message(
+          message:
+              "Donor must have recovered and it should not be more than 30-40 days after testing positive.",
+        )
       ],
     );
   }
@@ -308,6 +489,36 @@ class _DonorAddressState extends State<DonorAddress> {
               color: Theme.of(context).primaryColor),
         )),
       ],
+    );
+  }
+}
+
+//
+//
+//
+//
+//
+//
+// -----------------MESSAGE----------------------
+//
+//
+//
+//
+//
+//
+//
+class Message extends StatelessWidget {
+  final String message;
+
+  const Message({Key key, this.message}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(children: [
+        Icon(Icons.info, color: Theme.of(context).primaryColor),
+        SizedBox(width: 10),
+        Flexible(child: modified_text(text: message))
+      ]),
     );
   }
 }

@@ -28,13 +28,7 @@ class AboutUs extends StatelessWidget {
                   '\n\n' +
                   'Our mission is to make this process a bit simpler & easier. On our platform, a plasma donor can register himself with all his contact details so that it becomes easier for the recipient to contact the right donor. A recipient can request for plasma as well.' +
                   '\n\n' +
-                  // 'We were dedicated to make this app after seeing our friends, teachers, families requesting for plasma across various platforms & realizing the need of such platform.' +
-                  // '\n\n' +
-                  // 'Recently, requests for plasma donation have increased across social media with people asking for help for their near ones who have tested coronavirus positive. It is very much challenging to find the right donor with same blood group around you.' +
-                  // '\n\n' +
-                  // 'Our mission is to make this process a bit simpler & easier. On our platform, a plasma donor can register himself with all his contact details so that it becomes easier for the recipient to contact the right donor. A recipient can request for plasma as well.' +
-                  // '\n\n' +
-                  'We have tried our best to make the platform bugs free but if you find any please contact us through our email'),
+                 'We have tried our best to make the platform bugs free but if you find any please contact us through our email'),
           SizedBox(height: 10),
           InkWell(
             onTap: () {

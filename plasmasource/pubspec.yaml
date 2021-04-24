@@ -29,6 +29,7 @@ dependencies:
   google_fonts:
   pinput:
   firebase_core:
+  firebase_storage: ^8.0.0
   http:
   uuid:
   geolocator: ^7.0.3
@@ -38,6 +39,7 @@ dependencies:
   share: ^2.0.1
   android_intent: 
   permission_handler: 
+  image_picker: ^0.7.4
 
 
 

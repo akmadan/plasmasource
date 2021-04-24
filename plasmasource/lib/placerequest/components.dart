@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:plasmasource/utils/text.dart';
 
 //
@@ -325,6 +328,82 @@ class _ContactState extends State<Contact> {
                 border: InputBorder.none,
                 hintText: "Enter Contact No.",
               ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+//
+//
+//
+//
+//
+//
+//
+// -----------------PHOTO------------------
+//
+//
+//
+//
+//
+//
+class Photo extends StatefulWidget {
+  static File image;
+  @override
+  _PhotoState createState() => _PhotoState();
+}
+
+class _PhotoState extends State<Photo> {
+  final picker = ImagePicker();
+  bool is_selected = false;
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        Photo.image = File(pickedFile.path);
+        is_selected = true;
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        bold_text(
+          text: "Doctor's Prescription",
+          size: 24,
+          color: Colors.grey[700],
+        ),
+        SizedBox(height: 10),
+        InkWell(
+          onTap: () {
+            getImage();
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade400.withOpacity(0.2),
+            ),
+            padding: EdgeInsets.all(10),
+            height: 50,
+            child: Center(
+              child: Row(children: [
+                Icon(Icons.photo),
+                SizedBox(width: 10),
+                modified_text(text: 'Select Photo', size: 18),
+                SizedBox(width: 10),
+                is_selected
+                    ? Icon(Icons.check, color: Theme.of(context).primaryColor)
+                    : Container()
+              ]),
             ),
           ),
         ),

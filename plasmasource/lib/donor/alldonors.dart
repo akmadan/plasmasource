@@ -77,19 +77,11 @@ class _AllDonorsState extends State<AllDonors> {
                     return ListView.builder(
                       itemCount: docs.length,
                       itemBuilder: (context, index) {
-                        if(bloodgroup== 'All Donors'){
-                          return DonorBubble(
-                            isme: false,
-                            name: docs[index]['donorname'],
-                            bg: docs[index]['bg'],
-                            donoraddress: docs[index]['donoraddress'],
-                            contact: docs[index]['contact'],
-                            lat: docs[index]['latitude'],
-                            lon: docs[index]['longitude'],
-                          );
-                        }
-                        else {
-                          if (docs[index]['bg'] == bloodgroup) {
+                        if (bloodgroup == 'All Donors') {
+                          if (DateTime.now()
+                                  .difference(docs[index]['dop'].toDate())
+                                  .inDays <=
+                              40) {
                             return DonorBubble(
                               isme: false,
                               name: docs[index]['donorname'],
@@ -99,6 +91,23 @@ class _AllDonorsState extends State<AllDonors> {
                               lat: docs[index]['latitude'],
                               lon: docs[index]['longitude'],
                             );
+                          }
+                        } else {
+                          if (docs[index]['bg'] == bloodgroup) {
+                            if (DateTime.now()
+                                    .difference(docs[index]['dop'].toDate())
+                                    .inDays <=
+                                40) {
+                              return DonorBubble(
+                                isme: false,
+                                name: docs[index]['donorname'],
+                                bg: docs[index]['bg'],
+                                donoraddress: docs[index]['donoraddress'],
+                                contact: docs[index]['contact'],
+                                lat: docs[index]['latitude'],
+                                lon: docs[index]['longitude'],
+                              );
+                            }
                           } else {
                             return Container();
                           }
