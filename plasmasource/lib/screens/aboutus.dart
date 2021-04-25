@@ -22,13 +22,13 @@ class AboutUs extends StatelessWidget {
           modified_text(
               size: 20,
               text: '\n' +
-                  'We were dedicated to make this app after seeing our friends, teachers, families requesting for plasma across various platforms & realizing the need of such platform.' +
+                  'We were dedicated to make this app after seeing our friends, teachers, families requesting for plasma across various platforms & realizing the need of such platform. So, we the Students of Pune Institute of Computer Technology decided to make this platform available for everyone.' +
                   '\n\n' +
                   'Recently, requests for plasma donation have increased across social media with people asking for help for their near ones who have tested coronavirus positive. It is very much challenging to find the right donor with same blood group around you.' +
                   '\n\n' +
                   'Our mission is to make this process a bit simpler & easier. On our platform, a plasma donor can register himself with all his contact details so that it becomes easier for the recipient to contact the right donor. A recipient can request for plasma as well.' +
                   '\n\n' +
-                 'We have tried our best to make the platform bugs free but if you find any please contact us through our email'),
+                  'We have tried our best to make the platform bugs free but if you find any please contact us through our email'),
           SizedBox(height: 10),
           InkWell(
             onTap: () {
@@ -36,10 +36,16 @@ class AboutUs extends StatelessWidget {
             },
             child: Container(
                 child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(Icons.email),
                 SizedBox(width: 10),
-                bold_text(size: 18, text: 'benzenellc@gmail.com')
+                Text('benzenellc@gmail.com',
+                    style: TextStyle(
+                      fontFamily: 'SFPro',
+                      fontSize: 18,
+                      decoration: TextDecoration.underline,
+                    ))
               ],
             )),
           )

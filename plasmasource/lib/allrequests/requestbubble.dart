@@ -7,10 +7,19 @@ import 'package:plasmasource/utils/text.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
+import 'fullimage.dart';
+
 class RequestBubble extends StatefulWidget {
   final bool ismine;
   static String distance = '';
-  final String name, uid, doc, hospitaladdress, hospitalname, contact, bg;
+  final String name,
+      uid,
+      photourl,
+      doc,
+      hospitaladdress,
+      hospitalname,
+      contact,
+      bg;
   final double lat, lon;
 
   const RequestBubble(
@@ -24,7 +33,8 @@ class RequestBubble extends StatefulWidget {
       this.lon,
       this.ismine,
       this.uid,
-      this.doc})
+      this.doc,
+      this.photourl})
       : super(key: key);
   @override
   _RequestBubbleState createState() => _RequestBubbleState();
@@ -148,7 +158,7 @@ class _RequestBubbleState extends State<RequestBubble> {
                         deleterequest();
                       },
                       child: Card(
-                        color: Theme.of(context).primaryColor,
+                        color: Colors.white,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
                         elevation: 5,
@@ -158,7 +168,7 @@ class _RequestBubbleState extends State<RequestBubble> {
                             child: Center(
                                 child: modified_text(
                               text: 'Withdraw',
-                              color:Colors.white,
+                              color: Colors.grey[800],
                               size: 20,
                             ))),
                       ),
@@ -261,6 +271,21 @@ class _RequestBubbleState extends State<RequestBubble> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             modified_text(text: 'Blood Group: ' + widget.bg, size: 18),
+            widget.photourl != ''
+                ? InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  FullImage(photourl: widget.photourl)));
+                    },
+                    child: bold_text(
+                      text: "See Doctor's Prescription",
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  )
+                : Container(),
             Divider(),
             bold_text(text: 'Contact', size: 20),
             modified_text(text: widget.contact, size: 18),

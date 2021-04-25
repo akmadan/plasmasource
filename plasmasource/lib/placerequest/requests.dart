@@ -43,6 +43,7 @@ class _RequestState extends State<Request> {
           'hospitaladdress': hospitaladdress,
           'contact': contact,
           'latitude': position.latitude,
+          'prescription': '',
           'longitude': position.longitude
         });
         FirebaseFirestore.instance
@@ -57,6 +58,7 @@ class _RequestState extends State<Request> {
           'hospitalname': hospitalname,
           'hospitaladdress': hospitaladdress,
           'contact': contact,
+          'prescription': '',
           'latitude': position.latitude,
           'longitude': position.longitude
         });
@@ -144,11 +146,12 @@ class _RequestState extends State<Request> {
         title: 'Create Request for Plasma',
       )),
       body: Container(
-          padding: EdgeInsets.all(15),
+          padding: EdgeInsets.only(left: 15, right: 15),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: ListView(
             children: [
+              SizedBox(height: 15),
               PatientName(),
               SizedBox(height: 10),
               BloodGroup(),
@@ -161,7 +164,8 @@ class _RequestState extends State<Request> {
               SizedBox(height: 20),
               Divider(),
               SizedBox(height: 20),
-              Contact()
+              Contact(),
+              SizedBox(height: 15),
             ],
           )),
     );

@@ -263,6 +263,7 @@ class Dateofcovid extends StatefulWidget {
 class _DateofcovidState extends State<Dateofcovid> {
   _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
+      
       context: context,
       initialDate: Dateofcovid.selectedDate, // Refer step 1
       firstDate: DateTime(2000),

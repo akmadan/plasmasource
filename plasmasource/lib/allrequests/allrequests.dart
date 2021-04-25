@@ -74,10 +74,11 @@ class _AllState extends State<All> {
                     );
                   } else {
                     final docs = snapshot.data.docs;
+
                     return ListView.builder(
                       itemCount: docs.length,
                       itemBuilder: (context, index) {
-                        if(bloodgroup=='All Requests'){
+                        if (bloodgroup == 'All Requests') {
                           return RequestBubble(
                             ismine: false,
                             name: docs[index]['patientname'],
@@ -87,9 +88,9 @@ class _AllState extends State<All> {
                             contact: docs[index]['contact'],
                             lat: docs[index]['latitude'],
                             lon: docs[index]['longitude'],
+                            photourl: docs[index]['prescription'],
                           );
-                        }
-                        else {
+                        } else {
                           if (docs[index]['bg'] == bloodgroup) {
                             return RequestBubble(
                               ismine: false,
@@ -100,6 +101,7 @@ class _AllState extends State<All> {
                               contact: docs[index]['contact'],
                               lat: docs[index]['latitude'],
                               lon: docs[index]['longitude'],
+                              photourl: docs[index]['prescription'],
                             );
                           } else {
                             return Container();

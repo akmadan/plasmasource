@@ -8,7 +8,7 @@ import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class DonorBubble extends StatefulWidget {
-  final String uid, doc, name, donoraddress, contact, bg;
+  final String uid, doc, name, donoraddress, contact, bg, age, gender;
   final double lat, lon;
   final bool isme;
 
@@ -22,7 +22,9 @@ class DonorBubble extends StatefulWidget {
       this.lon,
       this.uid,
       this.doc,
-      this.isme})
+      this.isme,
+      this.age,
+      this.gender})
       : super(key: key);
   @override
   _DonorBubbleState createState() => _DonorBubbleState();
@@ -143,19 +145,18 @@ class _DonorBubbleState extends State<DonorBubble> {
                         deletedonor();
                       },
                       child: Card(
-                        color: Theme.of(context).primaryColor,
+                        color: Colors.white,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
                         elevation: 5,
                         child: Container(
-
                             width: double.infinity,
                             padding: EdgeInsets.all(15),
                             child: Center(
                                 child: modified_text(
                               text: 'Withdraw',
                               size: 20,
-                                  color: Colors.white,
+                              color: Colors.grey[800],
                             ))),
                       ),
                     )
@@ -257,6 +258,8 @@ class _DonorBubbleState extends State<DonorBubble> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             modified_text(text: 'Blood Group: ' + widget.bg, size: 18),
+            modified_text(text: 'Age: ' + widget.age, size: 18),
+            modified_text(text: 'Gender: ' + widget.gender, size: 18),
             Divider(),
             bold_text(text: 'Contact', size: 20),
             modified_text(text: widget.contact, size: 18),

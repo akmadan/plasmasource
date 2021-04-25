@@ -80,7 +80,7 @@ class drawer extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.all(20),
                     child: Image.asset(
-                      'assets/logo2.png',
+                      'assets/logo.png',
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -219,5 +219,23 @@ class logo extends StatelessWidget {
             )),
       ]),
     ));
+  }
+}
+
+class nodata extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          child: Image.asset('assets/cancel.png'),
+        ),
+        modified_text(
+          text: 'No Data Found',
+          size: 20,
+        )
+      ],
+    );
   }
 }
